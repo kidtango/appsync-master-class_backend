@@ -1,0 +1,23 @@
+{
+  "name": "appsync-master-class_backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "2nd attempt to finish this course!",
+  "scripts": {
+    "sls": "sls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kidtango/appsync-master-class_backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kidtango/appsync-master-class_backend/issues"
+  },
+  "homepage": "https://github.com/kidtango/appsync-master-class_backend#readme",
+  "devDependencies": {
+    "serverless": "^3.34.0",
+    "serverless-appsync-plugin": "^2.3.1"
+  }
+}
