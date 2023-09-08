@@ -1,12 +1,15 @@
 const DynamoDB = require('aws-sdk/clients/dynamodb')
-const DocumentClient = new DynamoDB.DocumentClient()
+const DocumentClient = new DynamoDB.DocumentClient({ region: 'us-east-1' })
 const chance = require('chance').Chance()
 
-const { USER_TABLE } = process.env
+const { USERS_TABLE } = process.env
 
 module.exports.handler = async (event) => {
+  console.log(event)
+
   if (event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
-    const { name } = event.request.userAttributes
+    const name = event.request.userAttributes['name']
+
     const suffix = chance.string({
       lenght: 8,
       caseing: 'upper',
@@ -26,7 +29,7 @@ module.exports.handler = async (event) => {
     }
 
     await DocumentClient.put({
-      Tablename: USER_TABLE,
+      TableName: USERS_TABLE,
       Item: user,
       ConditionExpression: 'attribute_not_exists(id)',
     }).promise()

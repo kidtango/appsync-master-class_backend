@@ -13,6 +13,10 @@ provider:
   environment:
     STAGE: ${self:custom.stage}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    REGION: ${self:custom.region}
+    USERS_TABLE: !Ref UsersTable
+    # COGNITO_USER_POOL_ID: !Ref CognitoUserPool
+    # WEB_COGNITO_USER_POOL_CLIENT_ID: !Ref WebUserPoolClient
 
 custom:
   region: ${opt:region, self:provider.region}
@@ -34,7 +38,6 @@ functions:
       - Effect: Allow
         Action: dynamodb:PutItem
         Resource: !GetAtt UsersTable.Arn
-
 
 resources:
   Resources:
@@ -98,5 +101,9 @@ resources:
   Outputs:
     AwsRegion:
       Value: ${self:custom.region}
+    
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool
+
+    WebCognitoUserPoolClientId:
+      Value: !Ref WebUserPoolClient
