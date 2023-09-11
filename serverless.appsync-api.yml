@@ -1,8 +1,32 @@
 name: appsyncmasterclass
-schema: schema.api.graphql
+schema: schema.graphql
+
 authentication:
   type: AMAZON_COGNITO_USER_POOLS
   config:
     awsRegion: us-east-1
     defaultAction: ALLOW
     userPoolId: !Ref CognitoUserPool
+
+dataSources:
+  usersTable:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref UsersTable
+
+resolvers:
+  getMyProfile:
+    kind: UNIT
+    type: Query
+    field: getMyProfile
+    dataSource: usersTable
+    request: mapping-templates/queries/getMyProfile.request.vtl
+    response: mapping-templates/queries/getMyProfile.response.vtl
+  
+  editMyProfile:
+    kind: UNIT
+    type: Mutation
+    field: editMyProfile
+    dataSource: usersTable
+    request: mapping-templates/mutations/editMyProfile.request.vtl
+    response: mapping-templates/mutations/editMyProfile.response.vtl

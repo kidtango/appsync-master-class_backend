@@ -9,3 +9,5 @@ npm run sls -- export-env
 
 ### Deploy to AWS
 npm run sls -- deploy
+
+npm run sls appsync validate-schema

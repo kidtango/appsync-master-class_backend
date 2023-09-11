@@ -28,6 +28,6 @@ describe('When confirmUserSignup runs', () => {
     expect(ddbUser.screenName).toContain(firstName)
     expect(ddbUser.screenName).toContain(lastName)
 
-    await then.delete_test_data(userName)
+    // await then.delete_test_data(userName)
   })
 })
