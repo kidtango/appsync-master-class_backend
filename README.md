@@ -11,3 +11,6 @@ npm run sls -- export-env
 npm run sls -- deploy
 
 npm run sls appsync validate-schema
+
+### Generate CloudFormation template
+npm run sls -- package

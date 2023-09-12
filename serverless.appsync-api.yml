@@ -13,6 +13,11 @@ dataSources:
     type: AMAZON_DYNAMODB
     config:
       tableName: !Ref UsersTable
+    
+  getImageUploadUrlFn:
+    type: AWS_LAMBDA
+    config:
+      functionName: getImageUploadUrl
 
 resolvers:
   getMyProfile:
@@ -30,3 +35,9 @@ resolvers:
     dataSource: usersTable
     request: mapping-templates/mutations/editMyProfile.request.vtl
     response: mapping-templates/mutations/editMyProfile.response.vtl
+
+  getImageUploadUrl:
+    kind: UNIT
+    type: Query
+    field: getImageUploadUrl
+    dataSource: getImageUploadUrlFn
