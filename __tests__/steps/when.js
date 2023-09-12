@@ -4,6 +4,8 @@ const velocityTemplate = require('amplify-velocity-template')
 const velocityMapper = require('amplify-appsync-simulator/lib/velocity/value-mapper/mapper')
 const fs = require('fs')
 const { sendRequest } = require('../lib/graphql')
+const { GraphQLClient } = require('graphql-request')
+const { editMyProfile } = require('../graphql/graphQLStatments')
 
 const myProfileFragment = `
 fragment myProfileFields on MyProfile {
@@ -103,8 +105,6 @@ const we_invoke_an_appsync_template = ({ templatePath, context }) => {
     valueMapper: velocityMapper.map,
   })
   const result = compiler.render(context)
-  console.log('🚀 ~ file: when.js:72 ~ result:', result)
-  return velocityTemplate.parse(result)
 }
 
 const a_user_calls_getMyProfile = async (user) => {
@@ -133,9 +133,29 @@ const a_user_calls_getMyProfile = async (user) => {
   return profile
 }
 
+const a_user_calls_editMyProfile = async ({ user, input }) => {
+  const variables = { input }
+  const endpoint = process.env.API_URL
+
+  const token = user.accessToken
+
+  const graphQLClient = new GraphQLClient(endpoint, {
+    headers: {
+      Authorization: `${token}`,
+    },
+  })
+  const { editMyProfile: updatedProfile = {} } = await graphQLClient.request(
+    editMyProfile,
+    variables
+  )
+
+  return updatedProfile
+}
+
 module.exports = {
   we_invoke_confirmUserSignup,
   a_user_signs_up,
   we_invoke_an_appsync_template,
   a_user_calls_getMyProfile,
+  a_user_calls_editMyProfile,
 }

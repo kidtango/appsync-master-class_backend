@@ -38,5 +38,6 @@ describe('#getMyProfile', () => {
       .evaluateMappingTemplate({ template, context })
       .promise()
     const result = JSON.parse(response.evaluationResult)
+    console.log("🚀 ~ file: getMyProfile.test.js:41 ~ it ~ result:", result)
   })
 })

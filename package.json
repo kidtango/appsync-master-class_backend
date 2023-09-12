@@ -35,6 +35,8 @@
   "dependencies": {
     "aws-appsync": "^4.1.9",
     "aws-sdk": "^2.1453.0",
-    "chance": "^1.1.11"
+    "chance": "^1.1.11",
+    "graphql": "^16.8.0",
+    "graphql-request": "^6.1.0"
   }
 }

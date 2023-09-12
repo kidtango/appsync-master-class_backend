@@ -2,8 +2,6 @@ require('dotenv').config()
 const given = require('../../steps/given')
 const then = require('../../steps/then')
 const when = require('../../steps/when')
-const chance = require('chance').Chance()
-const path = require('path')
 
 describe('Given an authenticated user', () => {
   let user, profile
@@ -25,5 +23,18 @@ describe('Given an authenticated user', () => {
       followingCount: 0,
       likesCount: 0,
     })
+  })
+
+  it('The user can edit his profile with editMyProfile', async () => {
+    const input = {
+      name: 'New Name',
+    }
+
+    const updatedProfile = await when.a_user_calls_editMyProfile({
+      user,
+      input,
+    })
+
+    expect(updatedProfile.name).toEqual(input.name)
   })
 })
