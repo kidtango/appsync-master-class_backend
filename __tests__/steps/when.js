@@ -4,7 +4,7 @@ const velocityTemplate = require('amplify-velocity-template')
 const velocityMapper = require('amplify-appsync-simulator/lib/velocity/value-mapper/mapper')
 const fs = require('fs')
 const { sendRequest } = require('../lib/graphql')
-const { GraphQLClient } = require('graphql-request')
+const { GraphQLClient, gql } = require('graphql-request')
 const { editMyProfile } = require('../graphql/graphQLStatments')
 
 const myProfileFragment = `
@@ -173,6 +173,35 @@ const we_invoke_getImageUploadUrl = async ({
   return await getImageUploadUrl(event)
 }
 
+const a_user_calls_getImageUploadUrl = async ({
+  user,
+  extension,
+  contentType,
+}) => {
+  const getImageUploadUrl = gql`
+    query getImageUploadUrl($extension: String, $contentType: String) {
+      getImageUploadUrl(extension: $extension, contentType: $contentType)
+    }
+  `
+
+  const variables = {
+    extension,
+    contentType,
+  }
+
+  const endpoint = process.env.API_URL
+
+  const graphQLClient = new GraphQLClient(endpoint, {
+    headers: {
+      Authorization: `${user.accessToken}`,
+    },
+  })
+
+  const data = await graphQLClient.request(getImageUploadUrl, variables)
+
+  return data
+}
+
 module.exports = {
   we_invoke_confirmUserSignup,
   a_user_signs_up,
@@ -180,4 +209,5 @@ module.exports = {
   a_user_calls_getMyProfile,
   a_user_calls_editMyProfile,
   we_invoke_getImageUploadUrl,
+  a_user_calls_getImageUploadUrl,
 }

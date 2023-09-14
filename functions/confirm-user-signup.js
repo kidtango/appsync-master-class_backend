@@ -1,10 +1,14 @@
-const DynamoDB = require('aws-sdk/clients/dynamodb')
-const DocumentClient = new DynamoDB.DocumentClient({ region: 'us-east-1' })
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb')
+const { PutCommand, DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb')
+
 const chance = require('chance').Chance()
 
 const { USERS_TABLE } = process.env
 
 module.exports.handler = async (event) => {
+  const client = new DynamoDBClient({ region: 'us-east-1' })
+  const docClient = DynamoDBDocumentClient.from(client)
+
   console.log(event)
 
   if (event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
@@ -28,11 +32,13 @@ module.exports.handler = async (event) => {
       likesCount: 0,
     }
 
-    await DocumentClient.put({
+    const command = new PutCommand({
       TableName: USERS_TABLE,
       Item: user,
       ConditionExpression: 'attribute_not_exists(id)',
-    }).promise()
+    })
+
+    await docClient.send(command)
 
     return event
   }

@@ -1,5 +1,7 @@
 require('dotenv').config()
 const AWS = require('aws-sdk')
+const http = require('axios')
+const fs = require('fs')
 
 const user_exists_in_UsersTable = async (id) => {
   const { USERS_TABLE, REGION } = process.env
@@ -31,4 +33,25 @@ const delete_test_data = async (id) => {
   }).promise()
 }
 
-module.exports = { user_exists_in_UsersTable, delete_test_data }
+const user_can_upload_image_to_url = async ({
+  uploadUrl,
+  contentType,
+  filePath,
+}) => {
+  console.log('🚀 ~ file: then.js:41 ~ contentType:', contentType)
+
+  const data = fs.readFileSync(filePath)
+
+  const res = await http({
+    method: 'put',
+    url: uploadUrl.getImageUploadUrl,
+    headers: { 'Content-Type': contentType },
+    data,
+  })
+}
+
+module.exports = {
+  user_exists_in_UsersTable,
+  delete_test_data,
+  user_can_upload_image_to_url,
+}

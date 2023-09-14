@@ -33,8 +33,10 @@
     "serverless-iam-roles-per-function": "^3.2.0"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.410.0",
+    "@aws-sdk/client-s3": "^3.412.0",
+    "@aws-sdk/lib-dynamodb": "^3.410.0",
     "aws-appsync": "^4.1.9",
-    "aws-sdk": "^2.1453.0",
     "chance": "^1.1.11",
     "graphql": "^16.8.0",
     "graphql-request": "^6.1.0",
