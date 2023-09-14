@@ -1,5 +1,6 @@
-const AWS = require('aws-sdk')
 require('dotenv').config()
+
+const AWS = require('aws-sdk')
 const velocityTemplate = require('amplify-velocity-template')
 const velocityMapper = require('amplify-appsync-simulator/lib/velocity/value-mapper/mapper')
 const fs = require('fs')

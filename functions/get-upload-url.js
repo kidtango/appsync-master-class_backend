@@ -1,18 +1,21 @@
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
 const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3')
-const S3 = require('aws-sdk/clients/s3')
-const s3 = new S3({ useAccelerateEndpoint: true })
 const ulid = require('ulid')
 
 module.exports.handler = async (event) => {
-  const client = new S3Client({ region: process.env.REGION })
   console.log(event)
   const { arguments: args, identity = {} } = event
 
-  const { BUCKET_NAME, REGION } = process.env
+  const client = new S3Client({
+    region: process.env.REGION,
+    useAccelerateEndpoint: true,
+    signatureVersion: 'v4',
+  })
+
+  const { BUCKET_NAME } = process.env
 
   const id = ulid.ulid()
-  let key = `${identity?.username}/${id}`
+  let key = `${identity.username}/${id}`
 
   const extension = args.extension
 

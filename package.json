@@ -30,16 +30,16 @@
     "serverless": "^3.34.0",
     "serverless-appsync-plugin": "^2.3.1",
     "serverless-export-env": "^2.2.0",
-    "serverless-iam-roles-per-function": "^3.2.0"
-  },
-  "dependencies": {
+    "serverless-iam-roles-per-function": "^3.2.0",
     "@aws-sdk/client-dynamodb": "^3.410.0",
     "@aws-sdk/client-s3": "^3.412.0",
     "@aws-sdk/lib-dynamodb": "^3.410.0",
     "aws-appsync": "^4.1.9",
-    "chance": "^1.1.11",
     "graphql": "^16.8.0",
-    "graphql-request": "^6.1.0",
+    "graphql-request": "^6.1.0"
+  },
+  "dependencies": {
+    "chance": "^1.1.11",
     "ulid": "^2.3.0"
   }
 }

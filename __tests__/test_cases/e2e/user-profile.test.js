@@ -45,26 +45,23 @@ describe('Given an authenticated user', () => {
       extension: '.png',
       contentType: 'image/png',
     })
-    console.log(
-      '🚀 ~ file: user-profile.test.js:48 ~ it ~ uploadUrl:',
-      uploadUrl
-    )
 
     const bucketName = process.env.BUCKET_NAME
-    // const regex = new RegExp(
-    //   `https://${bucketName}.s3-accelerate.amazonaws.com/${user.username}/.*\.png\?.*Content-Type=image%2Fpng.*`
-    // )
-    // expect(uploadUrl).toMatch(regex)
+    const regex = new RegExp(
+      `https://${bucketName}.s3-accelerate.amazonaws.com/${user.username}/.*\.png\*`
+    )
+    expect(uploadUrl.getImageUploadUrl).toMatch(regex)
 
     const filePath = path.join(__dirname, '../../assets/logo.png')
-    try {
-      await then.user_can_upload_image_to_url({
-        uploadUrl,
-        filePath,
-        contentType: 'image/png',
-      })
-    } catch (error) {
-      console.log('🚀 ~ file: user-profile.test.js:63 ~ it ~ error:', error)
-    }
+
+    await then.user_can_upload_image_to_url({
+      uploadUrl,
+      filePath,
+      contentType: 'image/png',
+    })
+
+    const downloadUrl = uploadUrl.getImageUploadUrl.split('?')[0]
+
+    await then.user_can_download_image_from(downloadUrl)
   })
 })

@@ -14,3 +14,6 @@ npm run sls appsync validate-schema
 
 ### Generate CloudFormation template
 npm run sls -- package
+
+### deploy a single resource/function
+yarn sls -- deploy -f <nameOfResource>
