@@ -12,7 +12,7 @@ type Query {
 
   getImageUploadUrl(extension: String, contentType: String): AWSURL!
 
-  getMyTimeLine(limit: Int!, nextToken: String): TweetsPage!
+  getMyTimeLine(limit: Int!, nextToken: String): TimelinePage!
 
   getLikes(userId: ID!, limit: Int!, nextToken: String): TweetsPage!
 
@@ -152,6 +152,11 @@ type Retweet implements ITweet {
 }
 
 type TweetsPage {
+  tweets: [ITweet!]
+  nextToken: String
+}
+
+type TimelinePage {
   tweets: [ITweet!]
   nextToken: String
 }

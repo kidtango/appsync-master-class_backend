@@ -1,0 +1,81 @@
+{
+  "arguments": {
+    "userId": "ddf8eac9-82c7-4799-9bdb-aafb3398055d",
+    "limit": 10
+  },
+  "environmentVariables": {},
+  "identity": {
+    "claims": {
+      "sub": "ddf8eac9-82c7-4799-9bdb-aafb3398055d",
+      "email_verified": false,
+      "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_LzzZUx8Mk",
+      "cognito:username": "ddf8eac9-82c7-4799-9bdb-aafb3398055d",
+      "origin_jti": "9c7d5a22-e7f1-4197-9fac-6855feaee258",
+      "aud": "62sb2bkebgomggsm9ka6ti2qka",
+      "event_id": "33a90e93-5ed0-4f8d-ba35-9878ce08aaf8",
+      "token_use": "id",
+      "auth_time": 1694747885,
+      "name": "Lulu Sadie ogsa",
+      "exp": 1694796036,
+      "iat": 1694792436,
+      "jti": "24f805a5-c301-4baa-9f9f-18bf114cb7f5",
+      "email": "Lulu-Sadie-ogsa@appsyncmasterclass.com"
+    },
+    "defaultAuthStrategy": "ALLOW",
+    "groups": null,
+    "issuer": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_LzzZUx8Mk",
+    "sourceIp": ["47.221.136.144"],
+    "sub": "ddf8eac9-82c7-4799-9bdb-aafb3398055d",
+    "username": "ddf8eac9-82c7-4799-9bdb-aafb3398055d"
+  },
+  "source": null,
+  "result": null,
+  "request": {
+    "headers": {
+      "x-forwarded-for": "47.221.136.144, 130.176.65.68",
+      "sec-ch-ua-mobile": "?0",
+      "cloudfront-viewer-country": "US",
+      "cloudfront-is-tablet-viewer": "false",
+      "x-amzn-requestid": "03189a77-06c1-440a-91f9-9f2824ea92c8",
+      "via": "2.0 f540e502092bb299549db36b162f0806.cloudfront.net (CloudFront)",
+      "cloudfront-forwarded-proto": "https",
+      "origin": "https://us-east-1.console.aws.amazon.com",
+      "content-length": "230",
+      "x-forwarded-proto": "https",
+      "accept-language": "en-US,en;q=0.9,und;q=0.8",
+      "host": "r6g6p3mqj5c6fmbmdj7rrnnpjq.appsync-api.us-east-1.amazonaws.com",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+      "cloudfront-is-mobile-viewer": "false",
+      "accept": "application/json, text/plain, */*",
+      "cloudfront-viewer-asn": "19108",
+      "cloudfront-is-smarttv-viewer": "false",
+      "x-amzn-appsync-is-vpce-request": "false",
+      "accept-encoding": "gzip, deflate, br",
+      "referer": "https://us-east-1.console.aws.amazon.com/",
+      "x-amzn-remote-ip": "47.221.136.144",
+      "content-type": "application/json",
+      "sec-fetch-mode": "cors",
+      "x-amzn-trace-id": "Root=1-650480dc-203ca4987ea20d2855d5ff41",
+      "x-amz-cf-id": "DW4XqVfzDOTJfd9QHPEv8NRgPM-bNVoVsTnf9Zv8ecSJsEL46LYlJQ==",
+      "authorization": "eyJraWQiOiJOSnExNjI0RU1QYzY2YjdFbytKZnpyNndTNFZDK0R4XC95NGcybU1Ob3FQbz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJkZGY4ZWFjOS04MmM3LTQ3OTktOWJkYi1hYWZiMzM5ODA1NWQiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0x6elpVeDhNayIsImNvZ25pdG86dXNlcm5hbWUiOiJkZGY4ZWFjOS04MmM3LTQ3OTktOWJkYi1hYWZiMzM5ODA1NWQiLCJvcmlnaW5fanRpIjoiOWM3ZDVhMjItZTdmMS00MTk3LTlmYWMtNjg1NWZlYWVlMjU4IiwiYXVkIjoiNjJzYjJia2ViZ29tZ2dzbTlrYTZ0aTJxa2EiLCJldmVudF9pZCI6IjMzYTkwZTkzLTVlZDAtNGY4ZC1iYTM1LTk4NzhjZTA4YWFmOCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjk0NzQ3ODg1LCJuYW1lIjoiTHVsdSBTYWRpZSBvZ3NhIiwiZXhwIjoxNjk0Nzk2MDM2LCJpYXQiOjE2OTQ3OTI0MzYsImp0aSI6IjI0ZjgwNWE1LWMzMDEtNGJhYS05ZjlmLTE4YmYxMTRjYjdmNSIsImVtYWlsIjoiTHVsdS1TYWRpZS1vZ3NhQGFwcHN5bmNtYXN0ZXJjbGFzcy5jb20ifQ.llfN0Mfyl451Mw8MNyWkcXBw-jEOYIdWMaAIRAiHb-nCdHG-ATjaZbL3FyuawIAOZayc2ThDIeoNNffBmZAw__B196GJIL25ReWpPczf1xGIv0sTEbP0QYxARfSCzOyamL72bGYa9hERmmKsQzNVD-iwMUA8W3J3ZBskVibNX3Ko79kHES6YQMRY-B-aTJb9osLJwcq7HZwg_Ia2PorhJkAnucwNi4V1oe0aNJAvqU26U3zudqXRPBFlhSmI2HPu6jNtj3-A4WS1XwrRkBkRRA02wy_n67UCfD0-PoAFVTjFj5e8nqBB5D6HUrBZYMlzrBLZ0biSj30PuBDgJaN9ow",
+      "sec-fetch-dest": "empty",
+      "x-amz-user-agent": "AWS-Console-AppSync/",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "cloudfront-is-desktop-viewer": "true",
+      "sec-fetch-site": "cross-site",
+      "sec-ch-ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\"",
+      "x-forwarded-port": "443"
+    },
+    "domainName": null
+  },
+  "info": {
+    "fieldName": "getTweets",
+    "parentTypeName": "Query",
+    "variables": {}
+  },
+  "error": null,
+  "prev": null,
+  "stash": {},
+  "outErrors": [],
+  "env": {}
+}

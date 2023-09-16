@@ -1,1 +1,126 @@
-'https://appsync-master-class-backend-dev-assetsbucket-1kqjnoplielyd.s3-accelerate.amazonaws.com/2488a4e8-8071-7053-a587-9cd637b75c43/01HA8Q09PW0BZPEXN9K6ZBFVTX.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIA22Z7SKWSZSWXYHBV%2F20230914%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230914T020600Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFIaCXVzLWVhc3QtMSJHMEUCIQCXN5qBy0VVymcsq7N957lOhbs0Gpozt62deHjd2KTJlAIgOQgL%2BX04%2FL%2FppJyX1Jr7KEGtAVYZ9Zizd%2F%2Bn%2FAV4yC4quQMIOxACGgw3NDQ3NzMyNzcwOTMiDMdO5qlhhusmCXJDIyqWA%2FZy8uY%2FrCm2kOffRQRV03Xe5nspZP%2FxKjkgfWAO%2FOdfzmpodz8xaT7eBgB5Gdo7RTCFIN3SxtrxbPGoV3LifMNrLnm2M6vyXBw7e%2BNh2pc1Kj4zpGoK%2BeYgY5XPhzHZVzr3Sd%2B%2BmfCKql8UWJK%2Bdt%2BsbCiFdau3uHoVXnEw41LizLbD5Hde511zQlIT9EjKLGd5H%2FRQzYSv0hNpstKG6tI4OlTHbgUX16Oi8yNyZSMabwA7NQXROMw6kT63bO79fKGXyRUa1xkaqb15kEv5xgmZGPxwRGyCQw6AFOJ2BG20dCxXLW1unthgpasFa4qfFHPhmkPQGRlhJocl6WMf6ZVnv9HY6adeYrNyOJfAqJ%2BiFHPOWuCgTD6XIBbLZjnqPj1%2FW0W6RsDJG%2F8eXIryeSsc7f8aMFkCZu5MmkhThmOlFERFPY5XECwNZLwYFsvgQKYXVdzFJDHbmbwDlhp37rnHt1cUWNR7QjD2ZdxwpfVZsPrCwNnjmGsa8OPy81KqK0pnfIOxNe1IL9HYb4svF%2Fi3QPApYGwwitOJqAY6ngFKtZd5dDSBkNeZLTf9TovL8JDQIhjoGB%2FMSmVLxX4P8J%2Fa6bhAMH7400cQ0B6LHsX2hkyH6pQ76akh2%2Fh2GFEvgSHmrZELXAfP7Z3SSvu46%2BZfjO7cWgpRDgEUZMOS9SRpEtkn8gTe%2FGqn6%2BvpJ10Owq%2BORG0laJNV%2BNCMq2zzB0MVlJuYo8%2FjS%2Bw1IP7vbR4VxXTYt9rG9Z9vN0UPTA%3D%3D&X-Amz-Signature=f46c58df2a0bd95507a412a99ce57300f3c75bc00a29e9ffdfce3d457bedd47a&X-Amz-SignedHeaders=host&x-amz-acl=public-read&x-id=PutObject'
+const context = {
+  arguments: {},
+  environmentVariables: {},
+  identity: {
+    claims: {
+      sub: 'ddf8eac9-82c7-4799-9bdb-aafb3398055d',
+      email_verified: false,
+      iss: 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_LzzZUx8Mk',
+      'cognito:username': 'ddf8eac9-82c7-4799-9bdb-aafb3398055d',
+      origin_jti: '9c7d5a22-e7f1-4197-9fac-6855feaee258',
+      aud: '62sb2bkebgomggsm9ka6ti2qka',
+      event_id: '33a90e93-5ed0-4f8d-ba35-9878ce08aaf8',
+      token_use: 'id',
+      auth_time: 1694747885,
+      name: 'Lulu Sadie ogsa',
+      exp: 1694810332,
+      iat: 1694806733,
+      jti: 'bdde3bf1-8119-4e16-8c3a-855a55fd2020',
+      email: 'Lulu-Sadie-ogsa@appsyncmasterclass.com',
+    },
+    defaultAuthStrategy: 'ALLOW',
+    groups: null,
+    issuer: 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_LzzZUx8Mk',
+    sourceIp: ['47.221.136.144'],
+    sub: 'ddf8eac9-82c7-4799-9bdb-aafb3398055d',
+    username: 'ddf8eac9-82c7-4799-9bdb-aafb3398055d',
+  },
+  source: {
+    createdAt: '2023-09-15T03:59:36.211Z',
+    creator: 'ddf8eac9-82c7-4799-9bdb-aafb3398055d',
+    replies: 0,
+    __typename: 'Tweet',
+    text: 'test',
+    id: '01HABFX08KEP4W1WJT1TQBKC14',
+    retweets: 0,
+    likes: 0,
+  },
+  result: {
+    items: [
+      {
+        likesCount: 0,
+        createdAt: '2023-09-15T03:14:56.703Z',
+        tweetsCount: 2,
+        name: 'Lulu Sadie ogsa',
+        followersCount: 0,
+        screenName: 'LuluSadie ogsaVIzaWH9BO',
+        id: 'ddf8eac9-82c7-4799-9bdb-aafb3398055d',
+        followingCount: 0,
+      },
+    ],
+    nextToken: null,
+    scannedCount: 1,
+    startedAt: null,
+  },
+  request: {
+    headers: {
+      'x-forwarded-for': '47.221.136.144, 130.176.65.68',
+      'sec-ch-ua-mobile': '?0',
+      'cloudfront-viewer-country': 'US',
+      'cloudfront-is-tablet-viewer': 'false',
+      'x-amzn-requestid': 'e03931da-a1b1-4540-ba70-ff91fd1391a2',
+      via: '2.0 9c1a63b3c113da5e21aa59ce0f49731e.cloudfront.net (CloudFront)',
+      'cloudfront-forwarded-proto': 'https',
+      origin: 'https://us-east-1.console.aws.amazon.com',
+      'content-length': '311',
+      'x-forwarded-proto': 'https',
+      'accept-language': 'en-US,en;q=0.9,und;q=0.8',
+      host: 'r6g6p3mqj5c6fmbmdj7rrnnpjq.appsync-api.us-east-1.amazonaws.com',
+      'user-agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+      'cloudfront-is-mobile-viewer': 'false',
+      accept: 'application/json, text/plain, */*',
+      'cloudfront-viewer-asn': '19108',
+      'cloudfront-is-smarttv-viewer': 'false',
+      'x-amzn-appsync-is-vpce-request': 'false',
+      'accept-encoding': 'gzip, deflate, br',
+      referer: 'https://us-east-1.console.aws.amazon.com/',
+      'x-amzn-remote-ip': '47.221.136.144',
+      'content-type': 'application/json',
+      'sec-fetch-mode': 'cors',
+      'x-amzn-trace-id': 'Root=1-6504b8cd-39c5c89a302f2aa23cc98dfe',
+      'x-amz-cf-id': 'IwAFyqnukpgF5ulg20xeOAcus4aHEFa-9istR9nNiY-l-i0VJazFsQ==',
+      authorization:
+        'eyJraWQiOiJOSnExNjI0RU1QYzY2YjdFbytKZnpyNndTNFZDK0R4XC95NGcybU1Ob3FQbz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJkZGY4ZWFjOS04MmM3LTQ3OTktOWJkYi1hYWZiMzM5ODA1NWQiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0x6elpVeDhNayIsImNvZ25pdG86dXNlcm5hbWUiOiJkZGY4ZWFjOS04MmM3LTQ3OTktOWJkYi1hYWZiMzM5ODA1NWQiLCJvcmlnaW5fanRpIjoiOWM3ZDVhMjItZTdmMS00MTk3LTlmYWMtNjg1NWZlYWVlMjU4IiwiYXVkIjoiNjJzYjJia2ViZ29tZ2dzbTlrYTZ0aTJxa2EiLCJldmVudF9pZCI6IjMzYTkwZTkzLTVlZDAtNGY4ZC1iYTM1LTk4NzhjZTA4YWFmOCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjk0NzQ3ODg1LCJuYW1lIjoiTHVsdSBTYWRpZSBvZ3NhIiwiZXhwIjoxNjk0ODEwMzMyLCJpYXQiOjE2OTQ4MDY3MzMsImp0aSI6ImJkZGUzYmYxLTgxMTktNGUxNi04YzNhLTg1NWE1NWZkMjAyMCIsImVtYWlsIjoiTHVsdS1TYWRpZS1vZ3NhQGFwcHN5bmNtYXN0ZXJjbGFzcy5jb20ifQ.CRsxzpFCvugl0I4sj8JSEGevNIXbavSGKg6aV4qYzQg4yA_JHHkZc5za8f3s_37Rj1AXozVjicjv3b3cPgtcr9kj0Efvl1sy9v6os1UA8RyHxfdp4V7LLFETH2TJyItvKTYnfQLBaISrvtK8QIdSQA5TjCBoSq-WKvJlDuBTQVhYaad49ALTX7JK-S6Twipkgh2SPY3RtdwKoAq3b82d2WnvtV6FNWtzJa6qqiPeI3LOyTo41F5CLOH-Ml4Rb-H_V_OwG1bZYkEtKIWj9XarIqYXV13SVEoY0JHRM68-qoUWJFM8FtQ6Qahe5UcAUwMDbT1_5d145TaH2Nf4Xrcb8A',
+      'sec-fetch-dest': 'empty',
+      'x-amz-user-agent': 'AWS-Console-AppSync/',
+      'sec-ch-ua-platform': '"Windows"',
+      'cloudfront-is-desktop-viewer': 'true',
+      'sec-fetch-site': 'cross-site',
+      'sec-ch-ua':
+        '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
+      'x-forwarded-port': '443',
+    },
+    domainName: null,
+  },
+  info: {
+    fieldName: 'profile',
+    parentTypeName: 'Tweet',
+    variables: {},
+  },
+  error: null,
+  prev: null,
+  stash: {},
+  outErrors: [],
+  env: {},
+}
+
+function response(ctx) {
+  console.log('🚀 ~ file: playground.js:109 ~ response ~ ctx:', ctx)
+  if (ctx.error) {
+    util.error(ctx.error.message, ctx.error.type)
+  }
+
+  const { result, identity } = ctx
+
+  const profile = {
+    ...result.items[0],
+    __typename: 'OtherProfile',
+  }
+
+  console.log('🚀 ~ file: tweet.profile.js:19 ~ response ~ profile:', profile)
+
+  return profile
+}
+
+response(context)

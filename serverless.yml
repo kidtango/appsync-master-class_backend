@@ -15,6 +15,8 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     REGION: ${self:custom.region}
     USERS_TABLE: !Ref UsersTable
+    TIMELINES_TABLE_NAME: !Ref TimelinesTable
+    TWEETS_TABLE_NAME: !Ref TweetsTable
     # COGNITO_USER_POOL_ID: !Ref CognitoUserPool
     # WEB_COGNITO_USER_POOL_CLIENT_ID: !Ref WebUserPoolClient
 
@@ -49,6 +51,23 @@ functions:
           - s3:PutObject 
           - s3:PutObjectAcl
         Resource: !Sub ${AssetsBucket.Arn}/*
+  
+  tweet:
+    handler: functions/tweet.handler
+    environment:
+      USERS_TABLE_NAME: !Ref UsersTable
+      TWEETS_TABLE_NAME: !Ref TweetsTable
+      TIMELINES_TABLE_NAME: !Ref TimelinesTable
+    iamRoleStatements:
+      - Effect: Allow 
+        Action: dynamodb:UpdateItem
+        Resource: !GetAtt UsersTable.Arn
+
+      - Effect: Allow
+        Action: dynamodb:PutItem
+        Resource:
+          - !GetAtt TweetsTable.Arn
+          - !GetAtt TimelinesTable.Arn
 
 resources:
   Resources:
@@ -67,6 +86,86 @@ resources:
             Value: ${self:custom.stage}
           - Key: Name
             Value: users-table
+
+    TweetsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: creator
+            AttributeType: S
+          - AttributeName: retweetOf
+            AttributeType: S
+          - AttributeName: inReplyToTweetId
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: byCreator 
+            KeySchema:
+              - AttributeName: creator
+                KeyType: HASH
+              - AttributeName: id
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: retweetsByCreator 
+            KeySchema:
+              - AttributeName: creator 
+                KeyType: HASH
+              - AttributeName: retweetOf 
+                KeyType: RANGE
+            Projection:
+                ProjectionType: ALL
+          - IndexName: repliesForTweet
+            KeySchema:
+              - AttributeName: inReplyToTweetId
+                KeyType: HASH
+              - AttributeName: id
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        Tags: 
+          - Key: Environment 
+            Value: ${self:custom.stage}
+          - Key: Name
+            Value: tweets-table
+        
+    TimelinesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: userId 
+            KeyType: HASH
+          - AttributeName: tweetId
+            KeyType: RANGE
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: tweetId
+            AttributeType: S
+          - AttributeName: distributedFrom
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: byDistributeFrom
+            KeySchema:
+              - AttributeName: userId 
+                KeyType: HASH
+              - AttributeName: distributedFrom
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        Tags:
+          - Key: Environment
+            Value: ${self:custom.stage}
+          - Key: Name
+            Value: timelines-table
 
     CognitoUserPool:
       Type: AWS::Cognito::UserPool

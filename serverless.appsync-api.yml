@@ -13,31 +13,81 @@ dataSources:
     type: AMAZON_DYNAMODB
     config:
       tableName: !Ref UsersTable
+  
+  tweetsTable:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref TweetsTable
+
+  timelinesTable:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref TimelinesTable
     
   getImageUploadUrlFn:
     type: AWS_LAMBDA
     config:
       functionName: getImageUploadUrl
+  
+  tweetFn:
+    type: AWS_LAMBDA
+    config:
+      functionName: tweet
+  
+pipelineFunctions:
+  getTimelineForUser:
+    dataSource: timelinesTable
+    code: mapping-templates/queries/getMyTimelineByUser.js
+  
+  getTweetsForTimeline:
+    dataSource: tweetsTable
+    code: mapping-templates/queries/getTweetsByTimeline.js
 
 resolvers:
-  getMyProfile:
+# Query Resolvers
+  Query.getMyProfile:
     kind: UNIT
-    type: Query
     field: getMyProfile
     dataSource: usersTable
     request: mapping-templates/queries/getMyProfile.request.vtl
     response: mapping-templates/queries/getMyProfile.response.vtl
   
-  editMyProfile:
+  Query.getImageUploadUrl:
     kind: UNIT
-    type: Mutation
+    field: getImageUploadUrl
+    dataSource: getImageUploadUrlFn
+
+  Query.getTweets:
+    functions:
+      - dataSource: tweetsTable
+        code: mapping-templates/queries/getTweets.js
+
+  Query.getMyTimeLine:
+    functions:
+      - getTimelineForUser
+      - getTweetsForTimeline
+
+# Mutation Resolvers
+  Mutation.tweet:
+    kind: UNIT
+    field: tweet
+    dataSource: tweetFn
+
+  Mutation.editMyProfile:
+    kind: UNIT
     field: editMyProfile
     dataSource: usersTable
     request: mapping-templates/mutations/editMyProfile.request.vtl
     response: mapping-templates/mutations/editMyProfile.response.vtl
 
-  getImageUploadUrl:
-    kind: UNIT
-    type: Query
-    field: getImageUploadUrl
-    dataSource: getImageUploadUrlFn
+# Nested Fields
+  Tweet.profile:
+    functions:
+      - dataSource: usersTable
+        code: mapping-templates/queries/tweet.profile.js
+
+
+  # TimelinePage.tweets:
+  #   functions:
+  #     - dataSource: tweetsTable
+  #       code: mapping-templates/queries/timelinePage.tweets.js
