@@ -62,7 +62,6 @@ functions:
       - Effect: Allow 
         Action: dynamodb:UpdateItem
         Resource: !GetAtt UsersTable.Arn
-
       - Effect: Allow
         Action: dynamodb:PutItem
         Resource:
@@ -167,6 +166,21 @@ resources:
           - Key: Name
             Value: timelines-table
 
+    LikesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: tweetId
+            KeyType: RANGE
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: tweetId
+            AttributeType: S
+    
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
       Properties:

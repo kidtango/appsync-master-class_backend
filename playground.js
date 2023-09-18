@@ -1,5 +1,5 @@
 const context = {
-  arguments: {},
+  arguments: { tweetId: '1234' },
   environmentVariables: {},
   identity: {
     claims: {
@@ -105,22 +105,41 @@ const context = {
   env: {},
 }
 
-function response(ctx) {
-  console.log('🚀 ~ file: playground.js:109 ~ response ~ ctx:', ctx)
-  if (ctx.error) {
-    util.error(ctx.error.message, ctx.error.type)
+const util = require('@aws-appsync/utils')
+
+function request(ctx) {
+  const {
+    arguments: { tweetId },
+    identity: { username },
+  } = ctx
+  const TweetsTable = '#TweetsTable#'
+  const UsersTable = '#UsersTable#'
+  const LikesTable = '#LikesTable#'
+
+  // batch write
+  // create record in likesTable
+  // increment likedCount in tweetsTable
+  // increment likedCount in usersTable
+  const operation = {
+    operation: 'TransactWriteItems',
+    transactItems: [
+      {
+        table: LikesTable,
+        operation: 'PutItem',
+        key: {
+          userId: util.dynamodb.toDynamoDB(username),
+          tweetId: util.dynamodb.toDynamoDB(tweetId),
+        },
+      },
+    ],
   }
+  console.log('🚀 ~ file: createLike.js:30 ~ request ~ operation:', operation)
 
-  const { result, identity } = ctx
-
-  const profile = {
-    ...result.items[0],
-    __typename: 'OtherProfile',
-  }
-
-  console.log('🚀 ~ file: tweet.profile.js:19 ~ response ~ profile:', profile)
-
-  return profile
+  return operation
 }
 
-response(context)
+function response(ctx) {
+  console.log('🚀 ~ file: createLike.js:9 ~ response ~ ctx:', ctx)
+}
+
+request(context)

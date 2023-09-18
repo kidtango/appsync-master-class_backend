@@ -1,26 +1,32 @@
 import { util } from '@aws-appsync/utils'
 
 export function request(ctx) {
-  console.log('🚀 ~ file: timelinePage.tweets.js:4 ~ request ~ ctx:', ctx)
+  const { prev } = ctx
+  // Refencing TweetsTable from global substitues in template
+  const TweetsTable = '#TweetsTable#'
 
-  // return {
-  //   operation: 'BatchGetItem',
-  //   tables: {
-  //     tweetsTable: {
-  //       keys: tweets.map((tweet) =>
-  //         util.dynamoDb.toMapValues({ id: tweet.id })
-  //       ),
-  //       consistentRead: false,
-  //     },
-  //   },
-  // }
+  return {
+    operation: 'BatchGetItem',
+    tables: {
+      [TweetsTable]: {
+        keys: prev.result.map((timeline) =>
+          util.dynamodb.toMapValues({ id: timeline.tweetId })
+        ),
+        consistentRead: false,
+      },
+    },
+  }
 }
 
 export function response(ctx) {
-  console.log('🚀 ~ file: timelinePage.tweets.js:26 ~ response ~ ctx:', ctx)
   if (ctx.error) {
     util.error(ctx.error.message, ctx.error.type)
   }
 
-  return []
+  const TweetsTable = '#TweetsTable#'
+
+  return {
+    tweets: ctx.result.data[TweetsTable],
+    nextToken: '',
+  }
 }

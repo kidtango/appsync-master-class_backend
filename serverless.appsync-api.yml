@@ -23,6 +23,27 @@ dataSources:
     type: AMAZON_DYNAMODB
     config:
       tableName: !Ref TimelinesTable
+  
+  likesTable:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref LikesTable
+
+  LikesDataSources:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref LikesTable
+      iamRoleStatements:
+        - Effect: Allow
+          Action: 
+            - dynamodb:PutItem
+          Resource: !GetAtt LikesTable.Arn
+        - Effect: Allow
+          Action: 
+            - dynamodb:UpdateItem
+          Resource:
+            - !GetAtt UsersTable.Arn
+            - !GetAtt TweetsTable.Arn
     
   getImageUploadUrlFn:
     type: AWS_LAMBDA
@@ -35,11 +56,11 @@ dataSources:
       functionName: tweet
   
 pipelineFunctions:
-  getTimelineForUser:
+  getMyTimelineByUser:
     dataSource: timelinesTable
     code: mapping-templates/queries/getMyTimelineByUser.js
   
-  getTweetsForTimeline:
+  getTweetsByTimeline:
     dataSource: tweetsTable
     code: mapping-templates/queries/getTweetsByTimeline.js
 
@@ -64,8 +85,8 @@ resolvers:
 
   Query.getMyTimeLine:
     functions:
-      - getTimelineForUser
-      - getTweetsForTimeline
+      - getMyTimelineByUser
+      - getTweetsByTimeline
 
 # Mutation Resolvers
   Mutation.tweet:
@@ -79,6 +100,11 @@ resolvers:
     dataSource: usersTable
     request: mapping-templates/mutations/editMyProfile.request.vtl
     response: mapping-templates/mutations/editMyProfile.response.vtl
+  
+  Mutation.like:
+    functions:
+      - code: mapping-templates/mutations/createLike.js
+        dataSource: LikesDataSources
 
 # Nested Fields
   Tweet.profile:
@@ -86,8 +112,12 @@ resolvers:
       - dataSource: usersTable
         code: mapping-templates/queries/tweet.profile.js
 
+  Tweet.liked:
+    functions:
+      - dataSource: likesTable
+        code: mapping-templates/queries/tweet.liked.js
 
-  # TimelinePage.tweets:
-  #   functions:
-  #     - dataSource: tweetsTable
-  #       code: mapping-templates/queries/timelinePage.tweets.js
+substitutions:
+  TweetsTable: !Ref TweetsTable
+  LikesTable: !Ref LikesTable
+  UsersTable: !Ref UsersTable
