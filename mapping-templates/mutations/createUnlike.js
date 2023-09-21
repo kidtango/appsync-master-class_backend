@@ -14,13 +14,13 @@ export function request(ctx) {
     transactItems: [
       {
         table: LikesTable,
-        operation: 'PutItem',
+        operation: 'DeleteItem',
         key: {
           userId: util.dynamodb.toDynamoDB(username),
           tweetId: util.dynamodb.toDynamoDB(tweetId),
         },
         condition: {
-          expression: 'attribute_not_exists(tweetId)',
+          expression: 'attribute_exists(tweetId)',
         },
       },
       {
@@ -30,7 +30,7 @@ export function request(ctx) {
         update: {
           expression: 'ADD likes :one',
           expressionValues: {
-            ':one': util.dynamodb.toDynamoDB(1),
+            ':one': util.dynamodb.toDynamoDB(-1),
           },
         },
       },
@@ -41,7 +41,7 @@ export function request(ctx) {
         update: {
           expression: 'ADD likesCount :one',
           expressionValues: {
-            ':one': util.dynamodb.toDynamoDB(1),
+            ':one': util.dynamodb.toDynamoDB(-1),
           },
         },
       },

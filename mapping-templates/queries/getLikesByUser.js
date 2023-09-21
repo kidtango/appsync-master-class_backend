@@ -2,15 +2,12 @@ import { util } from '@aws-appsync/utils'
 import * as ddb from '@aws-appsync/utils/dynamodb'
 
 export function request(ctx) {
-  const {
-    identity: { username },
-    arguments: { limit = 10, nextToken },
-  } = ctx
+  const { userId, limit = 20, nextToken } = ctx.arguments
 
-  if (limit > 10) util.error('Item limit must be less than 10')
+  if (limit > 20) util.error('Item limit must be less than 20')
 
   const queryCommand = ddb.query({
-    query: { userId: { eq: username } },
+    query: { userId: { eq: userId } },
     limit,
     nextToken,
     consistentRead: false,
