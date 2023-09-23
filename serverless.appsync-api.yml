@@ -13,168 +13,17 @@ dataSources:
     type: AMAZON_DYNAMODB
     config:
       tableName: !Ref UsersTable
-  
-  tweetsTable:
-    type: AMAZON_DYNAMODB
-    config:
-      tableName: !Ref TweetsTable
-
-  timelinesTable:
-    type: AMAZON_DYNAMODB
-    config:
-      tableName: !Ref TimelinesTable
-  
-  likesTable:
-    type: AMAZON_DYNAMODB
-    config:
-      tableName: !Ref LikesTable
-
-  retweetsTable:
-    type: AMAZON_DYNAMODB
-    config:
-      tableName: !Ref RetweetsTable
-
-  LikesDataSources:
-    type: AMAZON_DYNAMODB
-    config:
-      tableName: !Ref LikesTable
-      iamRoleStatements:
-        - Effect: Allow
-          Action: 
-            - dynamodb:PutItem
-            - dynamodb:DeleteItem
-          Resource: !GetAtt LikesTable.Arn
-        - Effect: Allow
-          Action: 
-            - dynamodb:UpdateItem
-          Resource:
-            - !GetAtt UsersTable.Arn
-            - !GetAtt TweetsTable.Arn
-  
-  RetweetDataSources:
-    type: AMAZON_DYNAMODB
-    config:
-      tableName: !Ref RetweetsTable
-      iamRoleStatements:
-        - Effect: Allow
-          Action: 
-            - dynamodb:PutItem
-          Resource: 
-            - !GetAtt RetweetsTable.Arn
-            - !GetAtt TimelinesTable.Arn
-            - !GetAtt TweetsTable.Arn
-        - Effect: Allow
-          Action: 
-            - dynamodb:UpdateItem
-          Resource:
-            - !GetAtt UsersTable.Arn
-            - !GetAtt TweetsTable.Arn
 
   getImageUploadUrlFn:
     type: AWS_LAMBDA
     config:
       functionName: getImageUploadUrl
   
-  tweetFn:
-    type: AWS_LAMBDA
-    config:
-      functionName: tweet
-  
-pipelineFunctions:
-  getTweetById:
-    dataSource: tweetsTable
-    code: mapping-templates/queries/getTweetById.js
-  
-  createRetweet:
-    dataSource: RetweetDataSources
-    code: mapping-templates/mutations/createRetweet.js
-
 resolvers:
-# Query Resolvers
-  Query.getMyProfile:
-    kind: UNIT
-    field: getMyProfile
-    dataSource: usersTable
-    request: mapping-templates/queries/getMyProfile.request.vtl
-    response: mapping-templates/queries/getMyProfile.response.vtl
-  
-  Query.getImageUploadUrl:
-    kind: UNIT
-    field: getImageUploadUrl
-    dataSource: getImageUploadUrlFn
 
-  Query.getTweets:
-    functions:
-      - dataSource: tweetsTable
-        code: mapping-templates/queries/getTweetsByCreator.js
-
-  Query.getMyTimeLine:
-    functions:
-      - dataSource: timelinesTable
-        code: mapping-templates/queries/getMyTimelineByUser.js
-
-
-  Query.getLikes:
-    functions:
-      - dataSource: likesTable
-        code: mapping-templates/queries/getLikesByUser.js
-
-# Mutation Resolvers
-  Mutation.tweet:
-    kind: UNIT
-    field: tweet
-    dataSource: tweetFn
-
-  Mutation.editMyProfile:
-    kind: UNIT
-    field: editMyProfile
-    dataSource: usersTable
-    request: mapping-templates/mutations/editMyProfile.request.vtl
-    response: mapping-templates/mutations/editMyProfile.response.vtl
-  
-  Mutation.like:
-    functions:
-      - code: mapping-templates/mutations/createLike.js
-        dataSource: LikesDataSources
-
-  Mutation.unlike:
-    functions: 
-      - code: mapping-templates/mutations/createUnlike.js
-        dataSource: LikesDataSources
-
-  Mutation.retweet:
-    functions:
-      - getTweetById
-      - createRetweet
-  
-  Mutation.unretweet:
-    functions:
-      - 
-
-# Nested Fields
-  Tweet.profile:
-    functions:
-      - dataSource: usersTable
-        code: mapping-templates/queries/tweet.profile.js
-
-  Tweet.liked:
-    functions:
-      - dataSource: likesTable
-        code: mapping-templates/queries/tweet.liked.js
-
-  UnhydratedTweetsPage.tweets:
-    functions:
-      - dataSource: tweetsTable
-        code: mapping-templates/queries/getTweetsByTweetId.js
-
-  Retweet.retweetOf:
-    functions:
-      - dataSource: tweetsTable
-        code: mapping-templates/queries/getTweetById.js
-
-substitutions:
-  TweetsTable: !Ref TweetsTable
-  LikesTable: !Ref LikesTable
-  UsersTable: !Ref UsersTable
-  TimelinesTable: !Ref TimelinesTable
-  RetweetsTable: !Ref RetweetsTable
+# substitutions:
+#   TweetsTable: !Ref TweetsTable
+#   LikesTable: !Ref LikesTable
+#   UsersTable: !Ref UsersTable
+#   TimelinesTable: !Ref TimelinesTable
+#   RetweetsTable: !Ref RetweetsTable
