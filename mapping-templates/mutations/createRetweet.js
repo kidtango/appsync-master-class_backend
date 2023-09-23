@@ -7,7 +7,7 @@ export function request(ctx) {
     prev: { result = [] },
   } = ctx
 
-  const tweetsCreator = result[0]?.creator || ''
+  const tweetsCreator = result[0]?.creator
 
   const TweetsTable = '#TweetsTable#'
   const UsersTable = '#UsersTable#'

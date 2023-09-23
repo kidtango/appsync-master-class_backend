@@ -106,7 +106,7 @@ resolvers:
   Query.getTweets:
     functions:
       - dataSource: tweetsTable
-        code: mapping-templates/queries/getTweets.js
+        code: mapping-templates/queries/getTweetsByCreator.js
 
   Query.getMyTimeLine:
     functions:
@@ -146,6 +146,10 @@ resolvers:
     functions:
       - getTweetById
       - createRetweet
+  
+  Mutation.unretweet:
+    functions:
+      - 
 
 # Nested Fields
   Tweet.profile:
@@ -161,7 +165,12 @@ resolvers:
   UnhydratedTweetsPage.tweets:
     functions:
       - dataSource: tweetsTable
-        code: mapping-templates/queries/getTweets.js
+        code: mapping-templates/queries/getTweetsByTweetId.js
+
+  Retweet.retweetOf:
+    functions:
+      - dataSource: tweetsTable
+        code: mapping-templates/queries/getTweetById.js
 
 substitutions:
   TweetsTable: !Ref TweetsTable

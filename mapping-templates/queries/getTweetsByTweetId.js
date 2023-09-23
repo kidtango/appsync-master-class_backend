@@ -1,6 +1,7 @@
 import { util, runtime } from '@aws-appsync/utils'
 
 export function request(ctx) {
+  console.log('🚀 ~ file: getTweetsByTweetId.js:4 ~ request ~ ctx:', ctx)
   const { items = [] } = ctx.source
 
   if (items.length === 0) {
@@ -8,14 +9,19 @@ export function request(ctx) {
   }
 
   const TweetsTable = '#TweetsTable#'
+  const distinct = (value, index, self) => self.indexOf(value) === index
+
+  const deduppedTweets = items
+    .map((item) => item.retweetOf || item.tweetId)
+    .filter(distinct)
 
   const batchGetCommand = {
     operation: 'BatchGetItem',
     tables: {
       [TweetsTable]: {
-        keys: items.map((item) =>
-          util.dynamodb.toMapValues({ id: item.tweetId })
-        ),
+        keys: deduppedTweets.map((tweetId) => {
+          return util.dynamodb.toMapValues({ id: tweetId })
+        }),
         consistentRead: false,
       },
     },
@@ -25,6 +31,7 @@ export function request(ctx) {
 }
 
 export function response(ctx) {
+  console.log('🚀 ~ file: getTweetsByTweetId.js:29 ~ response ~ ctx:', ctx)
   const {
     result: { data = [] },
   } = ctx
