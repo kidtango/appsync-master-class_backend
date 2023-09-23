@@ -56,17 +56,48 @@ resources:
       Properties:
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: id
+          - AttributeName: PK
             KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: PK
             AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+          - AttributeName: EntityType
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: GSI
+            KeySchema:
+              - AttributeName: GSI
+                KeyType: HASH
+              - AttributeName: SK
+                KeyType: RANGE
+            Projection:
+                ProjectionType: ALL
+          - IndexName: GS2
+            KeySchema:
+              - AttributeName: GS2
+                KeyType: HASH
+              - AttributeName: SK
+                KeyType: RANGE
+            Projection:
+                ProjectionType: ALL
+          - IndexName: EntityType
+            KeySchema:
+              - AttributeName: EntityType
+                KeyType: HASH
+              - AttributeName: SK
+                KeyType: RANGE
+            Projection:
+                ProjectionType: ALL
         Tags:
           - Key: Environment
             Value: ${self:custom.stage}
           - Key: Name
             Value: users-table
-            
+
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
