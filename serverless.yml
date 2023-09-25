@@ -16,6 +16,7 @@ provider:
     REGION: ${self:custom.region}
     # COGNITO_USER_POOL_ID: !Ref CognitoUserPool
     # WEB_COGNITO_USER_POOL_CLIENT_ID: !Ref WebUserPoolClient
+    TWEETER_TABLE: !Ref TweeterTable
 
 custom:
   region: ${opt:region, self:provider.region}
@@ -32,11 +33,11 @@ functions:
   confirmUserSignup:
     handler: functions/confirm-user-signup.handler
     environment:
-      USERS_TABLE: !Ref UsersTable
+      TWEETER_TABLE: !Ref TweeterTable
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:PutItem
-        Resource: !GetAtt UsersTable.Arn
+        Resource: !GetAtt TweeterTable.Arn
   
   getImageUploadUrl:
     handler: functions/get-upload-url.handler
@@ -51,10 +52,11 @@ functions:
   
 resources:
   Resources:
-    UsersTable:
+    TweeterTable:
       Type: AWS::DynamoDB::Table
       Properties:
         BillingMode: PAY_PER_REQUEST
+        TableName: TweeterTable
         KeySchema:
           - AttributeName: PK
             KeyType: HASH
@@ -65,30 +67,28 @@ resources:
             AttributeType: S
           - AttributeName: SK
             AttributeType: S
-          - AttributeName: EntityType
+          - AttributeName: GSI1_PK
+            AttributeType: S
+          - AttributeName: GSI1_SK
+            AttributeType: S
+          - AttributeName: GSI2_PK
+            AttributeType: S
+          - AttributeName: GSI2_SK
             AttributeType: S
         GlobalSecondaryIndexes:
-          - IndexName: GSI
+          - IndexName: GSI1_PK
             KeySchema:
-              - AttributeName: GSI
+              - AttributeName: GSI1_PK
                 KeyType: HASH
-              - AttributeName: SK
+              - AttributeName: GSI1_SK
                 KeyType: RANGE
             Projection:
                 ProjectionType: ALL
-          - IndexName: GS2
+          - IndexName: GSI2_PK
             KeySchema:
-              - AttributeName: GS2
+              - AttributeName: GSI2_PK
                 KeyType: HASH
-              - AttributeName: SK
-                KeyType: RANGE
-            Projection:
-                ProjectionType: ALL
-          - IndexName: EntityType
-            KeySchema:
-              - AttributeName: EntityType
-                KeyType: HASH
-              - AttributeName: SK
+              - AttributeName: GSI2_SK
                 KeyType: RANGE
             Projection:
                 ProjectionType: ALL

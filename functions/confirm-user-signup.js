@@ -3,7 +3,7 @@ const { PutCommand, DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb')
 
 const chance = require('chance').Chance()
 
-const { USERS_TABLE } = process.env
+const { TWEETER_TABLE } = process.env
 
 module.exports.handler = async (event) => {
   const client = new DynamoDBClient({ region: 'us-east-1' })
@@ -20,9 +20,14 @@ module.exports.handler = async (event) => {
       alpha: true,
       numeric: true,
     })
+
+    const id = `PROFILE|${event.userName}`
     const screenName = `${name.replace(/[^a-zA-Z0-9]/, '')}${suffix}`
     const user = {
-      id: event.userName,
+      PK: id,
+      SK: new Date().toJSON(),
+      GSI2_PK: 'PROFILE',
+      GSI2_SK: id,
       name,
       screenName,
       createdAt: new Date().toJSON(),
@@ -30,10 +35,11 @@ module.exports.handler = async (event) => {
       followingCount: 0,
       tweetsCount: 0,
       likesCount: 0,
+      __typename: 'Profile',
     }
 
     const command = new PutCommand({
-      TableName: USERS_TABLE,
+      TableName: TWEETER_TABLE,
       Item: user,
       ConditionExpression: 'attribute_not_exists(id)',
     })

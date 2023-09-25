@@ -9,21 +9,46 @@ authentication:
     userPoolId: !Ref CognitoUserPool
 
 dataSources:
-  usersTable:
+  tweeterTable:
     type: AMAZON_DYNAMODB
     config:
-      tableName: !Ref UsersTable
+      tableName: !Ref TweeterTable
 
   getImageUploadUrlFn:
     type: AWS_LAMBDA
     config:
       functionName: getImageUploadUrl
-  
-resolvers:
 
-# substitutions:
-#   TweetsTable: !Ref TweetsTable
-#   LikesTable: !Ref LikesTable
-#   UsersTable: !Ref UsersTable
-#   TimelinesTable: !Ref TimelinesTable
-#   RetweetsTable: !Ref RetweetsTable
+resolvers:
+  Query.getMyProfile:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/queries/getMyProfile.js
+
+  Query.getTweets:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/queries/getTweetsForUser.js
+
+  Retweet.retweetOf:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/queries/getRetweet.js
+
+  Tweet.profile:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/queries/getProfile.js
+
+  Mutation.createTweet:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/mutations/createTweet.js
+
+  Mutation.retweet:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/mutations/createRetweet.js
+
+substitutions:
+  TweeterTable: !Ref TweeterTable

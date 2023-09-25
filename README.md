@@ -2,18 +2,18 @@
  2nd attempt to finish this course!
 
 ### To create local CloudFormation templates
-npm run sls -- package
+yarn run sls -- package
 
 ### Generate local env
-npm run sls -- export-env
+yarn run sls -- export-env
 
 ### Deploy to AWS
-npm run sls -- deploy
+yarn run sls -- deploy
 
-npm run sls appsync validate-schema
+yarn run sls appsync validate-schema
 
 ### Generate CloudFormation template
-npm run sls -- package
+yarn run sls -- package
 
 ### deploy a single resource/function
 yarn sls -- deploy -f <nameOfResource>
