@@ -25,7 +25,7 @@ module.exports.handler = async (event) => {
     const screenName = `${name.replace(/[^a-zA-Z0-9]/, '')}${suffix}`
     const user = {
       PK: id,
-      SK: new Date().toJSON(),
+      SK: id,
       GSI2_PK: 'PROFILE',
       GSI2_SK: id,
       name,

@@ -14,7 +14,7 @@ type Query {
 
   getMyTimeLine(limit: Int!, nextToken: String): UnhydratedTweetsPage!
 
-  getLikes(userId: ID!, limit: Int!, nextToken: String): UnhydratedTweetsPage!
+  getLikes(userId: ID!, limit: Int!, nextToken: String): LikesPage!
 
   getFollowers(userId: ID!, limit: Int!, nextToken: String): ProfilesPage!
 
@@ -168,5 +168,18 @@ type TimelinePage {
 
 type UnhydratedTweetsPage {
   tweets: [ITweet]
+  nextToken: String
+}
+
+type Like {
+  PK: String!
+  SK: String!
+  createdAt: AWSDateTime!
+  likerName: String!
+  tweet: ITweet!
+}
+
+type LikesPage {
+  likes: [Like!]
   nextToken: String
 }

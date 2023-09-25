@@ -1,24 +1,31 @@
 import { util } from '@aws-appsync/utils'
 
 export function request(ctx) {
+  console.log('🚀 ~ file: createLike.js:5 ~ request ~ ctx:', ctx)
   const {
-    identity: { username },
+    identity: {
+      username,
+      claims: { name },
+    },
     arguments: { tweetId },
   } = ctx
 
   const TweeterTable = '#TweeterTable#'
 
-  const creator = `PROFILE|${username}`
-  const retweetId = `RETWEET|${tweetId}`
-  const timestamp = util.time.nowISO8601()
+  const likerId = `PROFILE|${username}`
+  const likeId = `LIKE|${tweetId}`
 
-  const reTweet = {
-    createdAt: timestamp,
-    __typename: 'Retweet',
-    GSI1_PK: retweetId,
-    GSI1_SK: creator,
-    GSI2_PK: 'TWEET',
-    GSI2_SK: retweetId,
+  const likeKeys = { PK: likerId, SK: likeId }
+  const createdAt = util.time.nowISO8601()
+
+  const newLike = {
+    createdAt,
+    GSI1_PK: tweetId,
+    GSI1_SK: `LIKE|${likerId}`,
+    GSI2_PK: 'LIKE',
+    GSI2_SK: tweetId,
+    __typename: 'Like',
+    likerName: name,
   }
 
   const transactWriteCommand = {
@@ -27,16 +34,16 @@ export function request(ctx) {
       {
         table: TweeterTable,
         operation: 'PutItem',
-        key: util.dynamodb.toMapValues({ PK: creator, SK: retweetId }),
-        attributeValues: util.dynamodb.toMapValues(reTweet),
+        key: util.dynamodb.toMapValues(likeKeys),
+        attributeValues: util.dynamodb.toMapValues(newLike),
         condition: { expression: 'attribute_not_exists(SK)' },
       },
       {
         table: TweeterTable,
         operation: 'UpdateItem',
-        key: util.dynamodb.toMapValues({ PK: creator, SK: tweetId }),
+        key: util.dynamodb.toMapValues({ PK: likerId, SK: tweetId }),
         update: {
-          expression: 'ADD retweets :one',
+          expression: 'ADD likes :one',
           expressionValues: {
             ':one': util.dynamodb.toDynamoDB(1),
           },
@@ -44,16 +51,12 @@ export function request(ctx) {
       },
     ],
   }
-  console.log(
-    '🚀 ~ file: createRetweet.js:49 ~ request ~ transactWriteCommand:',
-    transactWriteCommand
-  )
 
   return transactWriteCommand
 }
 
 export const response = (ctx) => {
-  console.log('🚀 ~ file: createRetweet.js:36 ~ response ~ ctx:', ctx)
+  console.log('🚀 ~ file: createLike.js:38 ~ response ~ ctx:', ctx)
 
   const {
     result: { cancellationReasons = null, keys = [] },

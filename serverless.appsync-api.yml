@@ -29,6 +29,11 @@ resolvers:
     functions:
       - dataSource: tweeterTable
         code: resolvers/queries/getTweetsForUser.js
+  
+  Query.getLikes:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/queries/getLikes.js
 
   Retweet.retweetOf:
     functions:
@@ -40,6 +45,11 @@ resolvers:
       - dataSource: tweeterTable
         code: resolvers/queries/getProfile.js
 
+  Like.tweet:
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/queries/getTweetById.js
+
   Mutation.createTweet:
     functions:
       - dataSource: tweeterTable
@@ -49,6 +59,11 @@ resolvers:
     functions:
       - dataSource: tweeterTable
         code: resolvers/mutations/createRetweet.js
+
+  Mutation.like: 
+    functions:
+      - dataSource: tweeterTable
+        code: resolvers/mutations/createLike.js
 
 substitutions:
   TweeterTable: !Ref TweeterTable
