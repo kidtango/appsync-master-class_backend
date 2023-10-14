@@ -1,0 +1,33 @@
+type Order {
+  id: ID!
+  qcSessions: [QcResult!]
+  qcSessionIds: [ID!] # sortable ulid
+  qcStatus: String!
+  adServerId: Int!
+}
+
+# pk: QCSESSION|orderId
+# sk: qcSessionId|AdSummary|Type
+# pk: QCSESSION|orderId
+# sk: qcSessionId|QcComment|Type|ulid
+type QcSession {
+  pk: String!
+  sk: String!
+  qcStatus: String!
+  severity: String!
+  entity: String! #Adsummary|Qccomment
+  sessionId: String!
+}
+
+type Rendition {
+ id: ID!
+}
+
+type QcResult {
+  qcSessionId: ID!
+  xml: {
+    adSummary: AdSummary,
+    comments: [Comments]
+  },
+  renditions: [Rendition]
+}
